@@ -26,27 +26,12 @@ namespace Organizer.Data
 
         private async Task CreateTables()
         {
-            await _connection.CreateTableAsync<Item>();
+            await _connection.CreateTableAsync<TaskModel>();
         }
 
-        public async Task WriteText(string text)
+        public async Task<List<TaskModel>> GetTasks()
         {
-            var item = await _connection.FindAsync<Item>(it => true);
-            if (item == null)
-            {
-                await _connection.InsertAsync(new Item { Text = text });
-            }
-            else
-            {
-                item.Text = text;
-                await _connection.UpdateAsync(item);
-            }
-        }
-
-        public async Task<string> ReadText()
-        {
-            var item = await _connection.FindAsync<Item>(it => true);
-            return item?.Text;
+            return await _connection.Table<TaskModel>().ToListAsync();
         }
     }
 }

@@ -9,10 +9,14 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            <Entry
+            <BoxView
                 HorizontalOptions="FillAndExpand"
-                Text="{Binding Text, Mode=TwoWay}"
-                VerticalOptions="CenterAndExpand" />
+                VerticalOptions="StartAndExpand"
+                Color="Blue" />
+            <Button
+                HorizontalOptions="FillAndExpand"
+                Text="Add"
+                VerticalOptions="End" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
