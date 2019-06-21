@@ -1,8 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Organizer.App">
+<Application
+    x:Class="Organizer.App"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:Organizer.Converters;assembly=Organizer">
     <Application.Resources>
-
+        <converters:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
+        <Style x:Key="Hint" TargetType="Label">
+            <Setter Property="FontSize" Value="Micro" />
+        </Style>
     </Application.Resources>
 </Application>

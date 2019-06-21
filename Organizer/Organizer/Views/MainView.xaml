@@ -9,11 +9,28 @@
     </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout>
-            <BoxView
+            <CollectionView
                 HorizontalOptions="FillAndExpand"
-                VerticalOptions="StartAndExpand"
-                Color="Blue" />
+                ItemsSource="{Binding Tasks}"
+                VerticalOptions="FillAndExpand">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame
+                            Margin="5"
+                            HasShadow="True"
+                            HorizontalOptions="FillAndExpand">
+                            <Frame.BindingContext>
+                                <viewmodels:TaskVm />
+                            </Frame.BindingContext>
+                            <StackLayout>
+                                <Label FontAttributes="Bold" Text="{Binding Title}" />
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
             <Button
+                Command="{Binding Add}"
                 HorizontalOptions="FillAndExpand"
                 Text="Add"
                 VerticalOptions="End" />

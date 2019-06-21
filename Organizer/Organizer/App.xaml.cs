@@ -51,5 +51,19 @@ namespace Organizer
         {
             // Handle when your app resumes
         }
+
+        public void GoToMain()
+        {
+            var mainPage = new MainView { BindingContext = MainVm };
+            MainPage = mainPage;
+        }
+
+        public void GoToAddTask()
+        {
+            var page = new AddEditTaskView();
+            var vm = (AddEditTaskVm)page.BindingContext;
+            vm.Init();
+            MainPage = page;
+        }
     }
 }

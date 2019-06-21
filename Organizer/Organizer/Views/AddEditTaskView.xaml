@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Organizer.Views.AddEditTaskView"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:enums="clr-namespace:Organizer.Enums;assembly=Organizer"
+    xmlns:viewModels="clr-namespace:Organizer.ViewModels;assembly=Organizer">
+    <ContentPage.BindingContext>
+        <viewModels:AddEditTaskVm />
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <Label Style="{StaticResource Hint}" Text="Title" />
+            <Entry Text="{Binding Task.Title, Mode=TwoWay}" />
+            <Label Style="{StaticResource Hint}" Text="Description" />
+            <Entry Text="{Binding Task.Description, Mode=TwoWay}" />
+            <Label Style="{StaticResource Hint}" Text="Type" />
+            <Picker
+                ItemDisplayBinding="{Binding}"
+                ItemsSource="{x:Static enums:EnumValues.TaskTypes}"
+                SelectedItem="{Binding Task.Type, Mode=TwoWay}" />
+            <Label Style="{StaticResource Hint}" Text="Priority" />
+            <Picker
+                ItemDisplayBinding="{Binding}"
+                ItemsSource="{x:Static enums:EnumValues.TaskPriorities}"
+                SelectedItem="{Binding Task.Priority, Mode=TwoWay}" />
+            <Label
+                IsVisible="{Binding IsDueDateVisible}"
+                Style="{StaticResource Hint}"
+                Text="Due date" />
+            <DatePicker Date="{Binding Task.DueDate}" IsVisible="{Binding IsDueDateVisible}" />
+            <Button
+                Command="{Binding Add}"
+                IsVisible="{Binding IsAdd}"
+                Text="Create" />
+            <Button
+                Command="{Binding Edit}"
+                IsVisible="{Binding IsEdit}"
+                Text="Update" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

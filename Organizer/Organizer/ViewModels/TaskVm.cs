@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 using Organizer.Enums;
 using Organizer.Models;
 using Organizer.Mvvm;
@@ -54,12 +56,12 @@ namespace Organizer.ViewModels
             set => SetValue(ref _dueDate, value);
         }
 
-        private DateTime? _dueDateTolerance;
+        private TimeSpan? _dueDateTolerance;
 
         /// <summary>
         /// Gets or sets DueDateTolerance value.
         /// </summary>
-        public DateTime? DueDateTolerance
+        public TimeSpan? DueDateTolerance
         {
             get => _dueDateTolerance;
             set => SetValue(ref _dueDateTolerance, value);
@@ -103,21 +105,51 @@ namespace Organizer.ViewModels
         public TaskVm()
         {
             Checklist = new ObservableCollection<ChecklistItemVm>();
+            Type = TaskType.Deadline;
+            State = TaskState.Actual;
+            Priority = TaskPriority.Average;
+        }
+
+        public TaskModel Save()
+        {
+            return new TaskModel
+            {
+                Id = Id,
+                Title = Title,
+                Description = Description,
+                DueDate = DueDate,
+                DueDateTolerance = DueDateTolerance,
+                Priority = Priority,
+                State = State,
+                Type = Type,
+                Checklist = JsonConvert.SerializeObject(Checklist.ToArray())
+            };
         }
 
         public static TaskVm Create(TaskModel task)
         {
-            return new TaskVm
+            var taskVm = new TaskVm
             {
                 Id = task.Id,
+                Title = task.Title,
+                Description = task.Description,
                 DueDate = task.DueDate,
                 DueDateTolerance = task.DueDateTolerance,
                 Priority = task.Priority,
                 State = task.State,
-                Title = task.Title,
-                Description = task.Description,
                 Type = task.Type
             };
+            if (!string.IsNullOrEmpty(task.Checklist))
+            {
+                var items = JsonConvert.DeserializeObject<ChecklistItem[]>(task.Checklist);
+                foreach (var item in items)
+                {
+                    var itemVm = new ChecklistItemVm();
+                    itemVm.Load(item);
+                    taskVm.Checklist.Add(itemVm);
+                }
+            }
+            return taskVm;
         }
     }
 }

@@ -44,9 +44,9 @@ namespace Organizer.ViewModels
             set => SetValue(ref _dependentOn, value);
         }
 
-        public void Load(string str)
+        public void Load(ChecklistItem item)
         {
-            var item = JsonConvert.DeserializeObject<ChecklistItem>(str);
+           // var item = JsonConvert.DeserializeObject<ChecklistItem>(str);
             IsChecked = item.IsChecked;
             Description = item.Description;
             if (item.TaskId.HasValue)
@@ -56,14 +56,14 @@ namespace Organizer.ViewModels
             }
         }
 
-        public string Save()
+        public ChecklistItem Save()
         {
-            return JsonConvert.SerializeObject(new ChecklistItem
+            return new ChecklistItem
             {
                 TaskId = DependentOn?.Id,
                 Description = Description,
                 IsChecked = IsChecked
-            });
+            };
         }
     }
 }

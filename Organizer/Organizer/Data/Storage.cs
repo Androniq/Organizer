@@ -33,5 +33,15 @@ namespace Organizer.Data
         {
             return await _connection.Table<TaskModel>().ToListAsync();
         }
+
+        public async Task AddTask(TaskModel task)
+        {
+            await _connection.InsertAsync(task);
+        }
+
+        public async Task UpdateTask(TaskModel task)
+        {
+            await _connection.UpdateAsync(task);
+        }
     }
 }

@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Organizer.Data;
+using Xamarin.Forms;
 
 namespace Organizer.ViewModels
 {
@@ -12,9 +14,17 @@ namespace Organizer.ViewModels
     {
         public ObservableCollection<TaskVm> Tasks { get; }
 
+        public ICommand Add { get; }
+
+        private void AddCommand()
+        {
+            App.Current.GoToAddTask();
+        }
+
         public MainVm()
         {
             Tasks = new ObservableCollection<TaskVm>();
+            Add = new Command(AddCommand);
         }
 
         public async Task Load()

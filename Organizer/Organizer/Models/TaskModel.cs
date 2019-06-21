@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Organizer.Enums;
 using SQLite;
 
@@ -18,7 +16,7 @@ namespace Organizer.Models
 
         public DateTime? DueDate { get; set; }
 
-        public DateTime? DueDateTolerance { get; set; }
+        public TimeSpan? DueDateTolerance { get; set; }
 
         public string Description { get; set; }
 
